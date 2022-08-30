@@ -65,10 +65,27 @@
           method: 'hello', token0: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", token1: "0xF9A2D7E60a3297E513317AD1d7Ce101CC4C6C8F6"
         }]
       })
-      console.log('response from server', response)
+      console.log('response: ', response)
+      alert(response.result)
     } catch (err) {
       console.error(err)
       alert('Problem happened: ' + err.message || err)
+    }
+  }
+
+  async function checkTokenCompliance() {
+    try{
+      const response = await ethereum.request({
+        method: 'wallet_invokeSnap',
+        params: [snapId, {
+          method: 'checkcompliance' , address: "0x08BA8CBbefa64Aaf9DF25e57fE3f15eCC277Af74"
+        }]
+      })
+
+      console.log('result from compliance ', response)
+    }catch(err){
+      console.log(err);
+      alert('Problem happened: ' + err.message || err);
     }
   }
 </script>

@@ -1,4 +1,5 @@
 const uniswapService = require('./../services/uniswap');
+const complianceChecker = require('./../services/token');
 
 module.exports.onRpcRequest = async ({ origin, request }) => {
   switch (request.method) {
@@ -27,6 +28,13 @@ module.exports.onRpcRequest = async ({ origin, request }) => {
       });
 
       return { result };
+
+    case 'checkcompliance': 
+      const {erc, address} = request;
+
+      const isCompliant = await complianceChecker[`checkerc${erc}compliance`](address)
+
+      return {result: isCompliant};
     default:
       throw new Error('Method not found.');
   }
