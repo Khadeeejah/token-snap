@@ -33,6 +33,7 @@
     "@metamask/eslint-config-jest": "^8.0.0",
     "@metamask/eslint-config-nodejs": "^8.0.0",
     "@metamask/snaps-cli": "^0.20.0",
+    "@types/node": "^18.7.14",
     "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.23.4",
@@ -41,7 +42,8 @@
     "eslint-plugin-prettier": "^3.4.0",
     "mkdirp": "^1.0.4",
     "prettier": "^2.3.2",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "tslib": "^2.4.0"
   },
   "publishConfig": {
     "access": "public",
@@ -49,5 +51,10 @@
   },
   "engines": {
     "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "@uniswap/sdk-core": "^3.0.1",
+    "@uniswap/v3-sdk": "^3.9.0",
+    "ethers": "^5.7.0"
   }
 }
