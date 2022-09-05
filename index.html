@@ -33,7 +33,6 @@
 
 <script>
   const snapId = `local:${window.location.href}`;
-  // const snapId = `http://localhost:8080`;
 
   const connectButton = document.querySelector('button.connect')
   const sendButton = document.querySelector('button.sendHello')
@@ -51,11 +50,6 @@
     })
   }
 
-  const { ethereum } = window
-  console.log('ethereum ', ethereum)
-
-  console.log('snap id ', snapId)
-
   // here we call the snap's "hello" method
   async function send() {
     try {
@@ -65,8 +59,8 @@
           method: 'hello', token0: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", token1: "0xF9A2D7E60a3297E513317AD1d7Ce101CC4C6C8F6"
         }]
       })
-      console.log('response: ', response)
-      alert(response.result)
+      console.log('response: ', response);
+      console.log(response.result.map(token => `${token.price}: ${token.address}`).join("\n"));
     } catch (err) {
       console.error(err)
       alert('Problem happened: ' + err.message || err)

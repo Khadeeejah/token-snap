@@ -1,10 +1,10 @@
 {
-  "name": "@metamask/template-snap",
-  "version": "0.7.0",
-  "description": "The 'Hello, world!' of MetaMask Snaps.",
+  "name": "token-price-snap",
+  "version": "0.1.0",
+  "description": "Get Spot Prices for a Token Pair",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaMask/snap-template.git"
+    "url": "https://github.com/Khadeeejah/token-price-snap.git"
   },
   "license": "MIT",
   "main": "src/index.js",
@@ -41,7 +41,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
     "mkdirp": "^1.0.4",
-    "prettier": "^2.3.2",
+    "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "tslib": "^2.4.0"
   },
@@ -54,7 +54,10 @@
   },
   "dependencies": {
     "@uniswap/sdk-core": "^3.0.1",
-    "@uniswap/v3-sdk": "^3.9.0",
-    "ethers": "^5.7.0"
+    "ethers": "^5.4.6",
+    "jsbi": "^3.1.4",
+    "promise.any": "^2.0.4",
+    "web3": "^1.7.5",
+    "web3-eth": "^1.7.5"
   }
 }

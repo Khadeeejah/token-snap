@@ -1,25 +1,26 @@
 {
-  "version": "0.7.0",
-  "description": "A MetaMask Snap template.",
-  "proposedName": "MetaMask Template Snap",
+  "version": "0.1.0",
+  "description": "Get Spot Prices for a Token Pair",
+  "proposedName": "Token Price Snap",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaMask/snap-template.git"
+    "url": "https://github.com/Khadeeejah/token-price-snap.git"
   },
   "source": {
-    "shasum": "33PHEMnjHECjfVpD2IYI68qqX4vHCpVGuffZ912BKHY=",
+    "shasum": "T6PbTkWEJNCXMRF9YWrVmyjak/eMU8HoURTIrZzQGmg=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
         "iconPath": "images/icon.svg",
-        "packageName": "@metamask/template-snap",
+        "packageName": "token-price-snap",
         "registry": "https://registry.npmjs.org/"
       }
     }
   },
   "initialPermissions": {
     "snap_confirm": {},
-    "snap_notify": {}
+    "snap_notify": {},
+    "endowment:network-access": {}
   },
   "manifestVersion": "0.1"
 }

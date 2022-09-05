@@ -10,15 +10,9 @@ async function main() {
   const imagesPath = path.join(publicPath, 'images/');
 
   await mkdirp(imagesPath);
-  await fs.copyFile(
-    path.join(rootPath, 'images/icon.svg'),
-    path.join(imagesPath, 'icon.svg'),
-  );
+  await fs.copyFile(path.join(rootPath, 'images/icon.svg'), path.join(imagesPath, 'icon.svg'));
 
-  const htmlContents = await fs.readFile(
-    path.join(rootPath, 'index.html'),
-    'utf8',
-  );
+  const htmlContents = await fs.readFile(path.join(rootPath, 'index.html'), 'utf8');
   await fs.writeFile(
     path.join(publicPath, 'index.html'),
     htmlContents.replace(
