@@ -53,7 +53,6 @@
     "node": ">=16.0.0"
   },
   "dependencies": {
-    "promise.any": "^2.0.4",
     "web3-eth": "^1.7.5"
   }
 }
