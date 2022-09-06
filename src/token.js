@@ -1,11 +1,8 @@
-const IERC721 = require('../abis/erc721.json');
-const IERC1155 = require('../abis/erc1155.json');
-const IERC20 = require('../abis/erc20.json');
-
 const provider = require('./provider');
+const { ERC721, ERC1155, ERC20 } = require('./interfaces')(provider);
 
 async function checkerc721compliance(address) {
-  const contract = new provider.Contract(IERC721, address);
+  const contract = ERC721.at(address);
 
   try {
     await contract.estimateGas.ownerOf(1);
@@ -18,7 +15,7 @@ async function checkerc721compliance(address) {
 }
 
 async function checkerc1155compliance(address) {
-  const contract = new provider.Contract(IERC1155, address);
+  const contract = ERC1155.at(address);
 
   try {
     await contract.estimateGas.balanceOf(1);
@@ -31,7 +28,7 @@ async function checkerc1155compliance(address) {
 }
 
 async function checkerc20compliance(address) {
-  const contract = new provider.Contract(IERC20, address);
+  const contract = ERC20.at(address);
 
   try {
     await contract.estimateGas.symbol();

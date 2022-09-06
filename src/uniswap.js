@@ -1,17 +1,14 @@
 const any = require('promise.any');
 const JSBI = require('jsbi');
 
-const IPool = require('../abis/pool.json');
-const IERC20 = require('../abis/erc20.json');
-const IUniswapFactory = require('../abis/uniswapv3Factory.json');
-
 const SDK = require('./v3-sdk-slim');
 const provider = require('./provider');
+const { Pool, UniswapV3Factory, ERC20 } = require('./interfaces')(provider);
 
 async function getPoolDetails(tokenPair) {
   tokenPair = tokenPair.sort((a, b) => -1 * (a.toLowerCase() < b.toLowerCase()));
-  const factoryContract = new provider.Contract(IUniswapFactory, SDK.V3_FACTORY_ADDRESS);
-  const decimals = tokenPair.map(addr => new provider.Contract(IERC20, addr).methods.decimals().call());
+  const factoryContract = UniswapV3Factory.at(SDK.V3_FACTORY_ADDRESS);
+  const decimals = tokenPair.map(addr => ERC20.at(addr).methods.decimals().call());
   try {
     return await any(
       SDK.FEE_TIERS.map(feeTier =>
@@ -20,7 +17,7 @@ async function getPoolDetails(tokenPair) {
             .getPool(tokenPair[0], tokenPair[1], feeTier * 10000)
             .call();
           try {
-            const poolContract = new provider.Contract(IPool, poolAddress);
+            const poolContract = Pool.at(poolAddress);
             const { sqrtPriceX96, tick } = await poolContract.methods.slot0().call();
             return {
               tokens: [
