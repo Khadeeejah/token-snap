@@ -1,6 +1,15 @@
+/**
+ * Bits and pieces of the uniswap SDK that we need, adapted for our use
+ */
+
 /* eslint-disable no-bitwise,eqeqeq,no-negated-condition */
 const JSBI = require('jsbi');
-const { MaxUint256 } = require('@uniswap/sdk-core');
+
+// https://docs.uniswap.org/protocol/concepts/V3-overview/fees#pool-fees-tiers
+const FEE_TIERS = [0.05, 0.3, 1];
+
+// https://docs.uniswap.org/protocol/reference/deployments
+const V3_FACTORY_ADDRESS = '0x1F98431c8aD98523631AE4a59f267346ea31F984';
 
 // https://github.com/Uniswap/v3-sdk/blob/08a7c050cba00377843497030f502c05982b1c43/src/internalConstants.ts
 const ZERO = JSBI.BigInt(0);
@@ -11,6 +20,9 @@ const Q192 = JSBI.exponentiate(Q96, JSBI.BigInt(2));
 
 // https://github.com/Uniswap/v3-sdk/blob/08a7c050cba00377843497030f502c05982b1c43/src/utils/tickMath.ts
 const Q32 = JSBI.exponentiate(JSBI.BigInt(2), JSBI.BigInt(32));
+
+// https://github.com/Uniswap/sdk-core/blob/c6ee3b71ddeeb4125ff232dc6d958f6bc82c1c4d/src/constants.ts#L37
+const MaxUint256 = JSBI.BigInt('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff');
 
 function mulShift(val, mulBy) {
   return JSBI.signedRightShift(JSBI.multiply(val, JSBI.BigInt(mulBy)), JSBI.BigInt(128));
@@ -51,7 +63,37 @@ function getSqrtRatioAtTick(tick) {
     : JSBI.divide(ratio, Q32);
 }
 
+function computePoolPrice(decimals0, decimals1, sqrtPriceX96, tick) {
+  // https://github.com/Uniswap/v3-sdk/blob/08a7c050cba00377843497030f502c05982b1c43/src/entities/pool.ts#L81-L87
+  const tickCurrentSqrtRatioX96 = getSqrtRatioAtTick(tick);
+  const nextTickSqrtRatioX96 = getSqrtRatioAtTick(tick + 1);
+  if (
+    !(
+      JSBI.greaterThanOrEqual(JSBI.BigInt(sqrtPriceX96), tickCurrentSqrtRatioX96) &&
+      JSBI.lessThanOrEqual(JSBI.BigInt(sqrtPriceX96), nextTickSqrtRatioX96)
+    )
+  )
+    throw new Error('Assertion failed: PRICE_BOUNDS');
+
+  // adapted from https://github.com/Uniswap/sdk-core/blob/a7ac4796af399bb7051c0c64b139cecd470044d9/src/entities/fractions/price.ts
+  return (
+    JSBI.toNumber(
+      JSBI.divide(
+        JSBI.multiply(
+          JSBI.multiply(
+            JSBI.multiply(sqrtPriceX96, sqrtPriceX96),
+            JSBI.exponentiate(JSBI.BigInt(10), decimals0),
+          ),
+          JSBI.BigInt(1000000),
+        ),
+        JSBI.multiply(Q192, JSBI.exponentiate(JSBI.BigInt(10), decimals1)),
+      ),
+    ) / 1000000
+  );
+}
+
 module.exports = {
-  Q192,
-  getSqrtRatioAtTick,
+  FEE_TIERS,
+  V3_FACTORY_ADDRESS,
+  computePoolPrice,
 };

@@ -1,22 +1,8 @@
-const uniswapService = require('./uniswap');
+const { getTokenPairSpotPrice } = require('./uniswap');
 const complianceChecker = require('./token');
 
-async function helloHandler(origin, request) {
-  const { token0, token1 } = request;
-  // const consent = await wallet.request({
-  //   method: 'snap_confirm',
-  //   params: [
-  //     {
-  //       prompt: `Hello, ${origin}!`,
-  //       description: 'This custom confirmation is just for display purposes.',
-  //       textAreaContent: `So you are trying to fetch spot prices for ${token0} and ${token1}`,
-  //     },
-  //   ],
-  // });
-  // if (!consent) {
-  //   return 'Sad to see you go 😭';
-  // }
-  return uniswapService.returnTokenPairSpotPrice([token0, token1]);
+async function lookupHandler(request) {
+  return getTokenPairSpotPrice(request.tokens);
 }
 
 async function complianceHandler(request) {
@@ -25,10 +11,10 @@ async function complianceHandler(request) {
   return { result: isCompliant };
 }
 
-module.exports.onRpcRequest = async ({ origin, request }) => {
+module.exports.onRpcRequest = async ({ request }) => {
   switch (request.method) {
-    case 'hello':
-      return await helloHandler(origin, request);
+    case 'lookup':
+      return await lookupHandler(request);
     case 'checkcompliance':
       return await complianceHandler(request);
     default:
