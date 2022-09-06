@@ -21,10 +21,10 @@ async function getPoolDetails(tokenPair) {
             const { sqrtPriceX96, tick } = await poolContract.methods.slot0().call();
             return {
               tokens: [
-                { address: tokenPair[0], decimals: JSBI.BigInt(await decimals[0]) },
-                { address: tokenPair[1], decimals: JSBI.BigInt(await decimals[1]) },
+                { address: tokenPair[0], decimals: await decimals[0] },
+                { address: tokenPair[1], decimals: await decimals[1] },
               ],
-              sqrtPriceX96: JSBI.BigInt(sqrtPriceX96),
+              sqrtPriceX96,
               tick,
             };
           } catch (err) {
