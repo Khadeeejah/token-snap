@@ -1,10 +1,10 @@
 {
   "version": "0.1.0",
   "description": "Get Spot Prices for a Token Pair",
-  "proposedName": "Token Price Snap",
+  "proposedName": "Token Snap",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Khadeeejah/token-price-snap.git"
+    "url": "https://github.com/Khadeeejah/token-snap.git"
   },
   "source": {
     "shasum": "ZJFsvrhqyGLVdaf35XcgCXGqYohKHnuBS8iWwelMVW0=",
@@ -12,7 +12,7 @@
       "npm": {
         "filePath": "dist/bundle.js",
         "iconPath": "images/icon.svg",
-        "packageName": "token-price-snap",
+        "packageName": "token-snap",
         "registry": "https://registry.npmjs.org/"
       }
     }
