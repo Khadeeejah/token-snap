@@ -50,45 +50,39 @@
       });
     }
 
+    async function callRPC(method, args) {
+      let response = await ethereum.request({
+        method: 'wallet_invokeSnap',
+        params: [ snapId, { method, args } ],
+      });
+
+      if ('error' in response) {
+        throw Object.assign(
+          new Error(
+            `An error occurred while executing a snap method\n${[
+              '-------- snap context --------',
+              ...response.error.stack.split('\n').map(l => `  ${l}`),
+              '-------- snap context --------',
+            ].map(l => `      ${l}`).join('\n')}`,
+          ),
+          { source: response.error },
+        );
+      }
+      return response.result;
+    }
+    
     async function lookup() {
-      let tokens = [
+      let tokenPair = [
         '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
         '0xF9A2D7E60a3297E513317AD1d7Ce101CC4C6C8F6',
       ];
-      try {
-        const response = await ethereum.request({
-          method: 'wallet_invokeSnap',
-          params: [
-            snapId,
-            { method: 'lookup', tokens },
-          ],
-        });
-
-        alert(`Tokens:\n  - ${response.tokens[0]}\n  - ${response.tokens[1]}\nPrice: ${response.price}`);
-      } catch (err) {
-        console.error(err);
-        alert('An Error Occurred: ' + err.message || err);
-      }
+      let response = await callRPC("price_lookup", { tokenPair });
+      alert(`Tokens:\n  - ${response.tokens[0]}\n  - ${response.tokens[1]}\nPrice: ${response.price}`);
     }
-
+    
     async function checkTokenCompliance() {
-      try {
-        const response = await ethereum.request({
-          method: 'wallet_invokeSnap',
-          params: [
-            snapId,
-            {
-              method: 'checkcompliance',
-              address: '0x08BA8CBbefa64Aaf9DF25e57fE3f15eCC277Af74',
-            },
-          ],
-        });
-
-        console.log('result from compliance ', response);
-      } catch (err) {
-        console.log(err);
-        alert('An Error Occurred: ' + err.message || err);
-      }
+      let response = await callRPC("check_compliance", { erc: 20, address: "0x08BA8CBbefa64Aaf9DF25e57fE3f15eCC277Af74" });
+      alert('result from compliance ', response);
     }
   </script>
 </html>

@@ -2,7 +2,7 @@ const IPool = require('../abis/pool.json');
 const IERC20 = require('../abis/erc20.json');
 const IERC721 = require('../abis/erc721.json');
 const IERC1155 = require('../abis/erc1155.json');
-const IUniswapV3Factory = require('../abis/uniswapv3Factory.json');
+const IUniswapV3Factory = require('../abis/uniswapv3factory.json');
 
 const $ = i => p => ({ at: a => new p.Contract(i, a) });
 

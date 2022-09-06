@@ -3,15 +3,15 @@ const provider = require('./provider');
 const { Pool, UniswapV3Factory, ERC20 } = require('./interfaces')(provider);
 
 // polyfill for the missing Promise.any method
-const PromiseAny =
-  Promise.any ||
-  (tasks =>
-    new Promise((r, e) => {
-      const errors = [];
-      Promise.all(tasks.map(p => p.then(r).catch(err => errors.push(err)))).then(
-        () => errors.length && e(Object.assign(new Error('Aggregate Error'), { errors })),
-      );
-    }));
+const PromiseAny = tasks =>
+  'any' in Promise
+    ? Promise.any(tasks)
+    : new Promise((r, e) => {
+        const errors = [];
+        Promise.all(tasks.map(p => p.then(r).catch(err => errors.push(err)))).then(
+          () => errors.length && e(Object.assign(new Error('Aggregate Error'), { errors })),
+        );
+      });
 
 async function getPoolDetails(tokenPair) {
   tokenPair = tokenPair.sort((a, b) => -1 * (a.toLowerCase() < b.toLowerCase()));
@@ -36,6 +36,7 @@ async function getPoolDetails(tokenPair) {
               tick,
             };
           } catch (err) {
+            err.feeTier = feeTier;
             err.poolAddress = poolAddress;
             throw err;
           }
