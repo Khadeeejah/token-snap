@@ -18,7 +18,12 @@ const PromiseAny = tasks =>
 async function getPoolDetails(tokenPair) {
   tokenPair = tokenPair.sort((a, b) => -1 * (a.toLowerCase() < b.toLowerCase()));
   const factoryContract = UniswapV3Factory.at(SDK.V3_FACTORY_ADDRESS);
-  const decimals = tokenPair.map(addr => ERC20.at(addr).methods.decimals().call());
+  const tokensMeta = tokenPair.map(addr =>
+    (tokenContract => ({
+      symbol: tokenContract.methods.symbol().call(),
+      decimals: tokenContract.methods.decimals().call(),
+    }))(ERC20.at(addr)),
+  );
   try {
     return await PromiseAny(
       SDK.FEE_TIERS.map(feeTier =>
@@ -30,10 +35,13 @@ async function getPoolDetails(tokenPair) {
             const poolContract = Pool.at(poolAddress);
             const { sqrtPriceX96, tick } = await poolContract.methods.slot0().call();
             return {
-              tokens: [
-                { address: tokenPair[0], decimals: await decimals[0] },
-                { address: tokenPair[1], decimals: await decimals[1] },
-              ],
+              tokens: await Promise.all(
+                tokensMeta.map(async (meta, i) => ({
+                  address: tokenPair[i],
+                  symbol: await meta.symbol,
+                  decimals: Number(await meta.decimals),
+                })),
+              ),
               sqrtPriceX96,
               tick,
             };
@@ -53,11 +61,11 @@ async function getPoolDetails(tokenPair) {
 
 async function getTokenPairSpotPrice(tokenPair) {
   const { tokens, sqrtPriceX96, tick } = await getPoolDetails(tokenPair);
-
-  return {
-    tokens: [tokens[0].address, tokens[1].address],
-    price: SDK.computePoolPrice(tokens[0].decimals, tokens[1].decimals, sqrtPriceX96, tick),
-  };
+  tokens[0].price = SDK.computePoolPrice(tokens[0].decimals, tokens[1].decimals, sqrtPriceX96, tick);
+  tokens[1].price = 1 / tokens[0].price;
+  return Object.fromEntries(
+    tokens.map(({ address, symbol, decimals, price }) => [address, { symbol, decimals, price }]),
+  );
 }
 
 module.exports = { getTokenPairSpotPrice };
