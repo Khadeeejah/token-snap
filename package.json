@@ -14,12 +14,13 @@
     "snap.manifest.json"
   ],
   "scripts": {
-    "version": "mm-snap manifest --fix && git add snap.manifest.json",
+    "version": "yarn build && yarn manifest:fix && git add snap.manifest.json",
     "build:clean": "yarn clean && yarn build",
     "build:website": "node ./scripts/build-website.js",
     "build": "mm-snap build",
     "serve": "mm-snap serve",
     "watch": "mm-snap watch",
+    "manifest:fix": "mm-snap manifest --fix",
     "clean": "rimraf dist/*",
     "lint:eslint": "eslint . --cache --ext js,ts",
     "lint:prettier": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' --ignore-path .gitignore",
