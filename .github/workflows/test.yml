@@ -1,4 +1,4 @@
-name: Build, Lint, and Test
+name: CI
 
 on:
   push:
@@ -6,9 +6,8 @@ on:
   pull_request:
 
 jobs:
-  build-lint-test:
-    name: Build, Lint, and Test
-    runs-on: ubuntu-20.04
+  build-lint:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [16.x, 18.x]
@@ -32,11 +31,3 @@ jobs:
       - run: yarn --frozen-lockfile
       - run: yarn build
       - run: yarn lint
-      - run: yarn test
-  all-jobs-pass:
-    name: All jobs pass
-    runs-on: ubuntu-20.04
-    needs:
-      - build-lint-test
-    steps:
-      - run: echo "Great success!"

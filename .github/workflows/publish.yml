@@ -1,32 +1,20 @@
-name: Publish Release
+name: deploy
 
 on:
-  pull_request:
-    types: [closed]
+  push:
+    branches: [main]
 
 jobs:
-  publish-release:
-    permissions:
-      contents: write
-    if: |
-      github.event.pull_request.merged == true &&
-      startsWith(github.event.pull_request.head.ref, 'release/')
+  gh-pages:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          # We check out the release pull request's base branch, which will be
-          # used as the base branch for all git operations.
-          ref: ${{ github.event.pull_request.base.ref }}
-      - name: Get Node.js version
+      - name: Get Node.js Version
         id: nvm
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
-      - uses: MetaMask/action-publish-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Get Yarn cache directory
         run: echo "::set-output name=YARN_CACHE_DIR::$(yarn cache dir)"
         id: yarn-cache-dir
@@ -41,7 +29,8 @@ jobs:
       - run: yarn --frozen-lockfile
       - run: yarn build
       - run: yarn build:website
-      - name: Publish to GitHub Pages
-        uses: MetaMask/action-publish-gh-pages@v2
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          source-directory: public
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
