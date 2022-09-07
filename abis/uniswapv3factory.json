@@ -82,9 +82,7 @@
       { "internalType": "uint24", "name": "fee", "type": "uint24" }
     ],
     "name": "createPool",
-    "outputs": [
-      { "internalType": "address", "name": "pool", "type": "address" }
-    ],
+    "outputs": [{ "internalType": "address", "name": "pool", "type": "address" }],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -137,9 +135,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "_owner", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "_owner", "type": "address" }],
     "name": "setOwner",
     "outputs": [],
     "stateMutability": "nonpayable",

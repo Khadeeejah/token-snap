@@ -1,16 +1,15 @@
 {
-  "name": "token-snap",
+  "name": "@khadeeejah/tokensnap",
   "version": "0.1.0",
   "description": "Get Spot Prices for a Token Pair",
   "repository": {
     "type": "git",
     "url": "https://github.com/Khadeeejah/token-snap.git"
   },
-  "license": "MIT",
+  "license": "(Apache-2.0 AND MIT)",
   "main": "src/index.js",
   "files": [
     "dist/",
-    "images/",
     "snap.manifest.json"
   ],
   "scripts": {
@@ -20,34 +19,23 @@
     "serve": "mm-snap serve",
     "watch": "mm-snap watch",
     "clean": "rimraf dist/*",
-    "test": "echo 'TODO'",
     "lint:eslint": "eslint . --cache --ext js,ts",
-    "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' --ignore-path .gitignore",
-    "lint": "yarn lint:eslint && yarn lint:misc --check",
-    "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",
-    "lint:changelog": "yarn auto-changelog validate"
+    "lint:prettier": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' --ignore-path .gitignore",
+    "lint": "yarn lint:eslint && yarn lint:prettier --check",
+    "lint:fix": "yarn lint:eslint --fix && yarn lint:prettier --write"
   },
   "devDependencies": {
-    "@metamask/auto-changelog": "^2.5.0",
     "@metamask/eslint-config": "^8.0.0",
-    "@metamask/eslint-config-jest": "^8.0.0",
     "@metamask/eslint-config-nodejs": "^8.0.0",
     "@metamask/snaps-cli": "^0.20.0",
-    "@types/node": "^18.7.14",
     "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
     "mkdirp": "^1.0.4",
     "prettier": "^2.7.1",
-    "rimraf": "^3.0.2",
-    "tslib": "^2.4.0"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "rimraf": "^3.0.2"
   },
   "engines": {
     "node": ">=16.0.0"

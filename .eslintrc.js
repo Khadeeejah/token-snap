@@ -5,10 +5,6 @@ module.exports = {
     browser: true,
   },
 
-  parserOptions: {
-    ecmaVersion: '2022',
-  },
-
   extends: ['@metamask/eslint-config'],
 
   plugins: ['prettier'],
@@ -24,11 +20,6 @@ module.exports = {
         ethereum: 'readonly',
       },
       extends: ['@metamask/eslint-config-nodejs'],
-    },
-
-    {
-      files: ['*.test.js'],
-      extends: ['@metamask/eslint-config-jest'],
     },
   ],
 
