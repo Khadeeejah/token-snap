@@ -1,3 +1,4 @@
+const symbols = require('./symbols');
 const complianceChecker = require('./token');
 const { getTokenPairSpotPrice } = require('./uniswap');
 
@@ -21,7 +22,15 @@ module.exports.onRpcRequest = async ({ request }) => {
       default:
     }
   } catch (err) {
-    return { error: { message: err.message, stack: err.stack } };
+    const error = { message: err.message, stack: err.stack };
+    if (symbols.errorCause in err) {
+      const causes = err[symbols.errorCause];
+      error.causes = (Array.isArray(causes) ? causes : [causes]).map(cause => ({
+        message: cause.message,
+        stack: cause.stack,
+      }));
+    }
+    return { error };
   }
 
   throw new Error('Unsupported RPC method');

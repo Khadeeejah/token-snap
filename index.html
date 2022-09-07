@@ -62,6 +62,13 @@
             `An error occurred while executing a snap method\n${[
               '-------- snap context --------',
               ...response.error.stack.split('\n').map(l => `  ${l}`),
+              ...(response.error.causes || []).flatMap((cause, i) => [
+                "",
+                ...([
+                  ...(!i ? ["  Caused by:"] : []),
+                  ...cause.stack.split('\n').map(l => `      ${l}`),
+                ]),
+              ]),
               '-------- snap context --------',
             ].map(l => `      ${l}`).join('\n')}`,
           ),

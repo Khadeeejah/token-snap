@@ -1,4 +1,5 @@
 const SDK = require('./v3-sdk-slim');
+const symbols = require('./symbols');
 const provider = require('./provider');
 const { Pool, UniswapV3Factory, ERC20 } = require('./interfaces')(provider);
 
@@ -9,7 +10,8 @@ const PromiseAny = tasks =>
     : new Promise((r, e) => {
         const errors = [];
         Promise.all(tasks.map(p => p.then(r).catch(err => errors.push(err)))).then(
-          () => errors.length && e(Object.assign(new Error('Aggregate Error'), { errors })),
+          () =>
+            errors.length && e(Object.assign(new Error('Aggregate Error'), { [symbols.errorCause]: errors })),
         );
       });
 
