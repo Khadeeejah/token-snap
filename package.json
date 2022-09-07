@@ -14,6 +14,7 @@
     "snap.manifest.json"
   ],
   "scripts": {
+    "version": "mm-snap manifest --fix && git add snap.manifest.json",
     "build:clean": "yarn clean && yarn build",
     "build:website": "node ./scripts/build-website.js",
     "build": "mm-snap build",
