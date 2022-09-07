@@ -89,11 +89,11 @@
           `An error occurred while executing a snap method\n${[
             '-------- snap context --------',
             ...response.error.stack.split('\n').map(l => `  ${l}`),
-            ...(response.error.causes || []).flatMap((cause, i) => [
+            ...(response.error.errors || []).flatMap((error, i) => [
               "",
               ...([
                 ...(!i ? ["  Caused by:"] : []),
-                ...cause.stack.split('\n').map(l => `      ${l}`),
+                ...error.stack.split('\n').map(l => `      ${l}`),
               ]),
             ]),
             '-------- snap context --------',
@@ -111,15 +111,28 @@
   }
 
   async function lookup() {
-    price.innerText = "Loading Price Data...";
     let tokenPair = getTokenInputs();
     if (tokenPair.length === 2) {
-      let response = await snapRPC("price_lookup", { tokenPair });
-      let priceReport = [
-        [response[tokenPair[0]].symbol, response[tokenPair[1]].symbol].join(' / '),
-        `  \u2022 Price: ${response[tokenPair[0]].price}`
-      ].join("\n");
-      price.innerText = priceReport;
+      price.innerText = "Loading Price Data...";
+      try {
+        let response = await snapRPC("price_lookup", { tokenPair });
+        let priceReport = [
+          [response[tokenPair[0]].symbol, response[tokenPair[1]].symbol].join(' / '),
+          `  \u2022 Price: ${response[tokenPair[0]].price}`
+        ].join("\n");
+        price.innerText = priceReport;
+      } catch (err) {
+        if ('source' in err) {
+          if (
+            Array.isArray(err.source.errors) &&
+            err.source.errors.every(
+              error => 'meta' in error && error.meta.poolAddress === '0x0000000000000000000000000000000000000000',
+            )
+          )
+            price.innerText = 'No Pool Exists For This Token Pair Combination';
+          else price.innerText = err.source.message;
+        }
+      }
     }
   }
 

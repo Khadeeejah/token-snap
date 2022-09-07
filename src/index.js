@@ -22,14 +22,23 @@ module.exports.onRpcRequest = async ({ request }) => {
       default:
     }
   } catch (err) {
-    const error = { message: err.message, stack: err.stack };
-    if (symbols.errorCause in err) {
-      const causes = err[symbols.errorCause];
-      error.causes = (Array.isArray(causes) ? causes : [causes]).map(cause => ({
-        message: cause.message,
-        stack: cause.stack,
-      }));
-    }
+    const error = Object.assign(
+      { message: err.message, stack: err.stack },
+      err[symbols.errorMeta] ? { meta: err[symbols.errorMeta] } : {},
+      err[symbols.nestedErrors]
+        ? {
+            errors: err[symbols.nestedErrors].map(cause =>
+              Object.assign(
+                {
+                  message: cause.message,
+                  stack: cause.stack,
+                },
+                cause[symbols.errorMeta] ? { meta: cause[symbols.errorMeta] } : {},
+              ),
+            ),
+          }
+        : {},
+    );
     return { error };
   }
 

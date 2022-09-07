@@ -11,7 +11,8 @@ const PromiseAny = tasks =>
         const errors = [];
         Promise.all(tasks.map(p => p.then(r).catch(err => errors.push(err)))).then(
           () =>
-            errors.length && e(Object.assign(new Error('Aggregate Error'), { [symbols.errorCause]: errors })),
+            errors.length &&
+            e(Object.assign(new Error('Aggregate Error'), { [symbols.nestedErrors]: errors })),
         );
       });
 
@@ -46,15 +47,14 @@ async function getPoolDetails(tokenPair) {
               tick,
             };
           } catch (err) {
-            err.feeTier = feeTier;
-            err.poolAddress = poolAddress;
+            Object.assign((err[symbols.errorMeta] = err[symbols.errorMeta] || {}), { feeTier, poolAddress });
             throw err;
           }
         })(),
       ),
     );
   } catch (err) {
-    err.tokenPair = tokenPair;
+    Object.assign((err[symbols.errorMeta] = err[symbols.errorMeta] || {}), { tokenPair });
     throw err;
   }
 }

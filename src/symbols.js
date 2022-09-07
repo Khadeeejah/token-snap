@@ -1,3 +1,4 @@
-const errorCause = Symbol('TokenSnapErrorCause');
+const nestedErrors = Symbol('TokenSnapNestedErrors');
+const errorMeta = Symbol('TokenSnapErrorMeta');
 
-module.exports = { errorCause };
+module.exports = { nestedErrors, errorMeta };
