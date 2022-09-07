@@ -2,7 +2,7 @@ name: pages
 
 on:
   push:
-    branches: [main, demo]
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
