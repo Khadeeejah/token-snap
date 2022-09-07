@@ -34,21 +34,32 @@
     </details>
     <br />
 
-    <div class="input-area">
-      <form id="form">
-        <label for="tk1">Token Adresss 1</label>
-        <input type="text" id="tk1" name="tk1" placeholder="0xF9A2D7E60a3297E513317AD1d7Ce101CC4C6C8F6">
 
-        <label for="tk2">Token Address 2</label>
-        <input type="text" id="tk2" name="tk2" placeholder="0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2">
+    <div class="grid-container">
+      <div class="input-area">
+        <form id="form">
+          <label for="lookup-tkn1">Token Adresss 1</label>
+          <input type="text" id="lookup-tkn1" name="lookup-tkn1" value="0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2">
 
-        <span id="price"></span>
-      </form>
-    </div>
-    <div class=" button-area">
-      <button class="connect">Connect</button>
-      <button class="lookupPrice">Submit</button>
-      <button class="checkToken">Check</button>
+          <label for="lookup-tkn2">Token Address 2</label>
+          <input type="text" id="lookup-tkn2" name="lookup-tkn2" value="0xF9A2D7E60a3297E513317AD1d7Ce101CC4C6C8F6">
+
+          <span id="lookup-price"></span>
+        </form>
+        <div class="button-area">
+          <button class="connect">Connect</button>
+          <button class="lookupPrice">Submit</button>
+        </div>
+      </div>
+      <div class="input-area">
+        <form id="form">
+          <label for="check-tkn">Token Adresss</label>
+          <input type="text" id="check-tkn" name="check-tkn" value="0xdAC17F958D2ee523a2206206994597C13D831ec7">
+        </form>
+        <div class="button-area">
+          <button class="checkToken">Check</button>
+        </div>
+      </div>
     </div>
   </div>
 </body>

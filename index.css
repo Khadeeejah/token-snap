@@ -22,6 +22,13 @@
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   }
 
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+  }
+
 .input-area{
     display: flex;
     flex-direction: column;
@@ -29,6 +36,9 @@
     height: 200px;
     margin: 20px;
     padding-top: 10px;
+    /* border: 1px solid white; */
+    padding: 30px;
+    text-align: center;
 }
 
 input[type=text] {
@@ -41,11 +51,11 @@ input[type=text] {
     box-sizing: border-box;
   }
 
-.button-area{
+/* .button-area{
    
     display: flex;
     
-}
+} */
 
 button{
     padding: 10px;

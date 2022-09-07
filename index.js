@@ -5,7 +5,7 @@ document.querySelector('.lookupPrice').addEventListener('click', lookup);
 const connectButton = document.querySelector('button.connect');
 const lookupButton = document.querySelector('button.lookupPrice');
 // const checkTokenButton = document.querySelector('button.checkToken');
-const price = document.querySelector('#price');
+const price = document.querySelector('#lookup-price');
 
 connectButton.addEventListener('click', connect);
 lookupButton.addEventListener('click', lookup);
@@ -47,7 +47,7 @@ async function snapRPC(method, args) {
 }
 
 function getTokenInputs() {
-  const inputs = [document.querySelector('#tk1').value, document.querySelector('#tk2').value];
+  const inputs = [document.querySelector('#lookup-tkn1').value, document.querySelector('#lookup-tkn2').value];
   return inputs.filter(Boolean);
 }
 
@@ -59,7 +59,7 @@ async function lookup() {
       const response = await snapRPC('price_lookup', { tokenPair });
       const priceReport = [
         [response[tokenPair[0]].symbol, response[tokenPair[1]].symbol].join(' / '),
-        `  \u2022 Price: ${response[tokenPair[0]].price}`,
+        `Price: ${response[tokenPair[0]].price}`,
       ].join('\n');
       price.innerText = priceReport;
     } catch (err) {
