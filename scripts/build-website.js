@@ -17,17 +17,16 @@ async function prepareArtifacts() {
     fs.copyFile(path.join(rootPath, 'images', 'icon.svg'), path.join(imagesPath, 'icon.svg')),
     fs.copyFile(path.join(rootPath, 'dist', 'bundle.js'), path.join(distPath, 'bundle.js')),
     fs.copyFile(path.join(rootPath, 'snap.manifest.json'), path.join(publicPath, 'snap.manifest.json')),
-    fs.copyFile(path.join(rootPath, 'index.js'), path.join(publicPath, 'index.js')),
-    // fs.writeFile(
-    //   path.join(publicPath, 'index.js'),
-    //   (
-    //     await fs.readFile(path.join(rootPath, 'index.js'), 'utf8')
-    //   ).replace(
-    //     // eslint-disable-next-line no-template-curly-in-string
-    //     'const snapId = `local:${window.location.href}`;',
-    //     'const snapId = `npm:@khadeeejah/tokensnap`;',
-    //   ),
-    // ),
+    fs.writeFile(
+      path.join(publicPath, 'index.js'),
+      (
+        await fs.readFile(path.join(rootPath, 'index.js'), 'utf8')
+      ).replace(
+        // eslint-disable-next-line no-template-curly-in-string
+        'const snapId = `local:${window.location.href}`;',
+        'const snapId = `npm:@khadeeejah/tokensnap`;',
+      ),
+    ),
   ]);
 }
 
