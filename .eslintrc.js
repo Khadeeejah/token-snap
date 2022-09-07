@@ -1,8 +1,12 @@
 module.exports = {
   root: true,
 
+  env: {
+    browser: true,
+  },
+
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: '2022',
   },
 
   extends: ['@metamask/eslint-config'],
@@ -17,6 +21,7 @@ module.exports = {
       },
       globals: {
         wallet: 'readonly',
+        ethereum: 'readonly',
       },
       extends: ['@metamask/eslint-config-nodejs'],
     },
