@@ -18,20 +18,21 @@ const PromiseAny = tasks =>
 
 async function getPoolDetails(tokenPair) {
   tokenPair = tokenPair.sort((a, b) => -1 * (a.toLowerCase() < b.toLowerCase()));
-  const factoryContract = UniswapV3Factory.at(SDK.V3_FACTORY_ADDRESS);
-  const tokensMeta = tokenPair.map(addr =>
-    (tokenContract => ({
-      symbol: tokenContract.methods.symbol().call(),
-      decimals: tokenContract.methods.decimals().call(),
-    }))(ERC20.at(addr)),
-  );
   try {
+    const factoryContract = UniswapV3Factory.at(SDK.V3_FACTORY_ADDRESS);
+    const tokensMeta = tokenPair.map(addr =>
+      (tokenContract => ({
+        symbol: tokenContract.methods.symbol().call(),
+        decimals: tokenContract.methods.decimals().call(),
+      }))(ERC20.at(addr)),
+    );
     return await PromiseAny(
       SDK.FEE_TIERS.map(feeTier =>
         (async () => {
           const poolAddress = await factoryContract.methods
             .getPool(tokenPair[0], tokenPair[1], feeTier * 10000)
             .call();
+          // todo! check addr is not 0x0
           try {
             const poolContract = Pool.at(poolAddress);
             const { sqrtPriceX96, tick } = await poolContract.methods.slot0().call();

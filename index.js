@@ -75,7 +75,7 @@ async function lookup() {
         else price.innerText = err.source.message;
       } else price.innerHTML = err.message;
     }
-  }
+  } else price.innerHTML = 'Both inputs must be specified';
 }
 
 // async function checkTokenCompliance() {
