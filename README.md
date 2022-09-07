@@ -7,13 +7,16 @@ Snaps to enable users fetch token price from uniswap and also check if a token i
 
 ## Live Demo
 
-You can test the daap here <link>
+You can test the daap here [Demo](https://khadeeejah.github.io/token-snap)
 
 ### Running the demo dapp locally
 
-After cloning , ensure you have the Metamask Flask installed and added to your chrome extension, see instructions here <link>
+After cloning , ensure you have the [Metamask Flask]( https://metamask.io/flask/) installed and added to your chrome extension.
 
 ```shell
 yarn install
+
 yarn watch
 ```
+
+For detailed documentation and integration instructions check  out my blog post on  [Hashnode]()
