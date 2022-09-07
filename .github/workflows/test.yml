@@ -6,6 +6,7 @@ on:
 
 jobs:
   build-lint:
+    name: 'Build & Lint'
     runs-on: ubuntu-latest
 
     strategy:

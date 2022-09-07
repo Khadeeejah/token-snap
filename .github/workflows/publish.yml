@@ -1,4 +1,4 @@
-name: pages
+name: Pages
 
 on:
   push:
@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  Build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -48,10 +48,10 @@ jobs:
         with:
           path: './public'
 
-  deploy:
+  Deploy:
     runs-on: ubuntu-latest
 
-    needs: build
+    needs: Build
 
     permissions:
       pages: write
