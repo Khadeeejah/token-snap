@@ -2,7 +2,8 @@
 
 Snaps to enable users fetch token price from uniswap and also check if a token is either ERC20,ERC721 and ERC1155 token
 
-<img width="1479" alt="Screen Shot 2022-09-07 at 1 19 20 PM" src="https://user-images.githubusercontent.com/52764879/188841704-ea815cbe-f060-446a-90a9-fe2fd173b453.png">
+<img width="1512" alt="Screen Shot 2022-09-08 at 12 48 09 AM" src="https://user-images.githubusercontent.com/52764879/188975441-f3bd49fe-65b3-4c0b-8d7a-a17776fa3dad.png">
+
 
 ## Live Demo
 
@@ -14,5 +15,5 @@ After cloning , ensure you have the Metamask Flask installed and added to your c
 
 ```shell
 yarn install
-yarn run serve
+yarn watch
 ```
