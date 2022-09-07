@@ -73,7 +73,7 @@ async function lookup() {
         )
           price.innerText = 'No Pool Exists For This Token Pair Combination';
         else price.innerText = err.source.message;
-      }
+      } else price.innerHTML = err.message;
     }
   }
 }
