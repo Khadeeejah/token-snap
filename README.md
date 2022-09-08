@@ -2,7 +2,8 @@
 
 Snaps to enable users fetch token price from uniswap and also check if a token is either ERC20,ERC721 and ERC1155 token
 
-<img width="1512" alt="Screen Shot 2022-09-08 at 1 42 56 AM" src="https://user-images.githubusercontent.com/52764879/188988191-c6e6976f-bd27-4dbb-8a52-ee82648ab4d1.png">
+<img width="1512" alt="Screen Shot 2022-09-08 at 8 10 00 PM" src="https://user-images.githubusercontent.com/52764879/189172705-97655761-f9ad-4023-b4db-c4f33c47ac31.png">
+
 
 ## Live Demo
 
