@@ -1,15 +1,15 @@
 const symbols = require('./symbols');
-const complianceChecker = require('./token');
+const token = require('./token');
 const { getTokenPairSpotPrice } = require('./uniswap');
 
 async function lookupHandler(args) {
   return await getTokenPairSpotPrice(args.tokenPair);
 }
 
-async function complianceHandler(request) {
-  const { erc, address } = request;
-  const isCompliant = await complianceChecker[`checkerc${erc}compliance`](address);
-  return { result: isCompliant };
+async function identifyHandler({ erc, address }) {
+  if ([20, 721, 1155].includes(erc)) return token.is[`ERC${erc}`](address);
+  if (typeof erc === 'undefined') return token.identify(address);
+  throw new Error(`Unexpected ERC Specification ${erc}`);
 }
 
 module.exports.onRpcRequest = async ({ request }) => {
@@ -17,8 +17,8 @@ module.exports.onRpcRequest = async ({ request }) => {
     switch (request.method) {
       case 'price_lookup':
         return { result: await lookupHandler(request.args) };
-      case 'check_compliance':
-        return { result: await complianceHandler(request.args) };
+      case 'identify_token':
+        return { result: await identifyHandler(request.args) };
       default:
     }
   } catch (err) {

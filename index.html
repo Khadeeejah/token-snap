@@ -10,7 +10,7 @@
 <body>
 
   <div class="navbar">
-    <button class="connect">Connect Button</button>
+    <button class="connect">Connect</button>
   </div>
 
 
@@ -21,18 +21,18 @@
     <details>
       <summary>Instructions</summary>
       <ul>
-        <li>First, click "Connect Button", to connect your metamask flask!</li>
+        <li>First, click <strong>"Connect"</strong> button, to connect your metamask flask!</li>
         <li>Please note that:</li>
         <ul>
           <li>
             You must have the metamask flask extension installed on your browser
           </li>
           <li>
-            Enter two different token address, and press the <strong>Submit button</strong> to check for the price for
+            Enter two different token address, and press the <strong>"Submit"</strong> button to check for the price for
             the token pair
           </li>
           <li>
-            Click on the <strong> Check Button</strong> to check if a token is either an ERC20, ERC721, or ERC1155
+            Click on the <strong>"Identify"</strong> button to check if a token is either an ERC20, ERC721, or ERC1155
             token.
           </li>
         </ul>
@@ -45,25 +45,29 @@
       <div class="input-area">
         <form id="form">
           <label for="lookup-tkn1">Token Adresss 1</label>
-          <input type="text" id="lookup-tkn1" name="lookup-tkn1" value="0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2">
+          <input type="text" id="lookup-tkn1" name="lookup-tkn1"
+            placeholder="0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" value="0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2">
 
           <label for="lookup-tkn2">Token Address 2</label>
-          <input type="text" id="lookup-tkn2" name="lookup-tkn2" value="0xF9A2D7E60a3297E513317AD1d7Ce101CC4C6C8F6">
+          <input type="text" id="lookup-tkn2" name="lookup-tkn2"
+            placeholder="0xF9A2D7E60a3297E513317AD1d7Ce101CC4C6C8F6" value="0xF9A2D7E60a3297E513317AD1d7Ce101CC4C6C8F6">
 
           <span id="lookup-price"></span>
         </form>
         <div class="button-area">
-         
           <button class="lookupPrice">Submit</button>
         </div>
       </div>
+
       <div class="input-area">
         <form id="form">
           <label for="check-tkn">Token Adresss</label>
-          <input type="text" id="check-tkn" name="check-tkn" value="0xdAC17F958D2ee523a2206206994597C13D831ec7">
+          <input type="text" id="check-tkn" name="check-tkn" placeholder="0xdAC17F958D2ee523a2206206994597C13D831ec7"
+            value="0xdAC17F958D2ee523a2206206994597C13D831ec7">
         </form>
+        <span id="token-identity"></span>
         <div class="button-area">
-          <button class="checkToken">Check</button>
+          <button class="identifyToken">Identify</button>
         </div>
       </div>
     </div>

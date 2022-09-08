@@ -12,17 +12,20 @@ function mutateEnv() {
     const fs = require('fs');
     const path = require('path');
 
-    env = Object.assign(
-      {},
-      process.env,
-      Object.fromEntries(
+    let envFile = {};
+    try {
+      envFile = Object.fromEntries(
         fs
           .readFileSync(path.join(path.dirname(__dirname), '.env'))
           .toString()
           .split(os.EOL)
           .map(line => splitOnce(line.trim(), '=')),
-      ),
-    );
+      );
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
+    }
+
+    env = Object.assign({}, process.env, envFile);
   }
 }
 

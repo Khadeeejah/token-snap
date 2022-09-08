@@ -2,13 +2,16 @@ const snapId = `local:${window.location.href}`;
 
 document.querySelector('.lookupPrice').addEventListener('click', lookup);
 
-const connectButton = document.querySelector('button.connect');
 const lookupButton = document.querySelector('button.lookupPrice');
-// const checkTokenButton = document.querySelector('button.checkToken');
-const price = document.querySelector('#lookup-price');
+const connectButton = document.querySelector('button.connect');
+const identifyButton = document.querySelector('button.identifyToken');
 
-connectButton.addEventListener('click', connect);
+const price = document.querySelector('#lookup-price');
+const identity = document.querySelector('#token-identity');
+
 lookupButton.addEventListener('click', lookup);
+connectButton.addEventListener('click', connect);
+identifyButton.addEventListener('click', tokenIdentify);
 
 // here we get permissions to interact with and install the snap
 async function connect() {
@@ -46,13 +49,11 @@ async function snapRPC(method, args) {
   return response.result;
 }
 
-function getTokenInputs() {
-  const inputs = [document.querySelector('#lookup-tkn1').value, document.querySelector('#lookup-tkn2').value];
-  return inputs.filter(Boolean);
-}
-
 async function lookup() {
-  const tokenPair = getTokenInputs();
+  const tokenPair = [
+    document.querySelector('#lookup-tkn1').value,
+    document.querySelector('#lookup-tkn2').value,
+  ].filter(Boolean);
   if (tokenPair.length === 2) {
     price.innerText = 'Loading Price Data...';
     try {
@@ -63,6 +64,7 @@ async function lookup() {
       ].join('\n');
       price.innerText = priceReport;
     } catch (err) {
+      console.error(err);
       if ('source' in err) {
         if (
           Array.isArray(err.source.errors) &&
@@ -73,22 +75,27 @@ async function lookup() {
         )
           price.innerText = 'No Pool Exists For This Token Pair Combination';
         else price.innerText = err.source.message;
-      } else price.innerHTML = err.message;
+      } else price.innerText = 'An error occurred, check the console logs for more information';
     }
-  } else price.innerHTML = 'Both inputs must be specified';
+  } else price.innerText = 'Both inputs must be specified';
 }
 
-// async function checkTokenCompliance() {
-//   const response = await snapRPC('check_compliance', {
-//     erc: 20,
-//     address: '0x08BA8CBbefa64Aaf9DF25e57fE3f15eCC277Af74',
-//   });
-//   alert('result from compliance ', response);
-
-//   form.addEventListener('submit', event => {
-//     // handle the form data
-//     event.preventDefault();
-//     console.log(event.target[0].value);
-//     console.log(event.target[1].value);
-//   });
-// }
+async function tokenIdentify() {
+  const address = document.querySelector('#check-tkn').value;
+  if (address) {
+    identity.innerText = 'Identifying token...';
+    try {
+      const response = await snapRPC('identify_token', { /* erc: 20, */ address });
+      const identityReport = [];
+      if (response.isERC20) identityReport.push('ERC 20');
+      if (response.isERC721) identityReport.push('ERC 721');
+      if (response.isERC1155) identityReport.push('ERC 1155');
+      if (identityReport.length) identity.innerText = identityReport.map(s => `  \u2022 ${s}`).join('\n');
+      else identity.innerText = 'This address matches no token standards';
+    } catch (err) {
+      console.error(err);
+      if ('source' in err) identity.innerText = err.source.message;
+      else identity.innerText = 'An error occurred, check the console logs for more information';
+    }
+  } else identity.innerText = 'Address must be specified';
+}
