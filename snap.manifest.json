@@ -7,7 +7,7 @@
     "url": "https://github.com/Khadeeejah/token-snap.git"
   },
   "source": {
-    "shasum": "ejunIwq1537QC9KNnUwygwvWhAyOb+p+QCe9EWBP9Xw=",
+    "shasum": "bmH7j7r3GteJW/avxinATPM5VvUPnU6Niy4bkM3Cr+M=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
@@ -17,6 +17,8 @@
       }
     }
   },
-  "initialPermissions": {},
+  "initialPermissions": {
+    "snap_confirm": {}
+  },
   "manifestVersion": "0.1"
 }
