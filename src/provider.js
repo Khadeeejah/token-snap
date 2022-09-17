@@ -1,3 +1,5 @@
+if (typeof wallet === 'undefined') delete globalThis.fetch;
+
 const Eth = require('web3-eth');
 
 const getEnv = require('./env');
