@@ -16,7 +16,7 @@ async function lookupHandler(request) {
   if (!consent) {
     return 'Sad to see you go 😭';
   }
-  return getTokenPairSpotPrice(request.tokens);
+  return getTokenPairSpotPrice(request.tokenPair);
 }
 
 async function identifyHandler({ erc, address }) {
