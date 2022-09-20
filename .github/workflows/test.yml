@@ -48,9 +48,6 @@ jobs:
       matrix:
         node-version: [16.x, 18.x]
 
-    environment:
-      name: CI
-
     env:
       INFURA_TOKEN: "b23062782fe64f22ae0c50ceadfdf70d"
 
