@@ -72,12 +72,32 @@ async function getTokenPairSpotPrice(tokenPair) {
 module.exports = { getTokenPairSpotPrice };
 
 async function main() {
+  function assertEq(a, b) {
+    if (a !== b) throw new Error(`Assertion Failed, left: ${a}, right: ${b}`);
+  }
+
   const tokenPair = [
     '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
     '0xF9A2D7E60a3297E513317AD1d7Ce101CC4C6C8F6',
   ];
   console.log('Querying Token Price For', tokenPair);
-  console.log(await getTokenPairSpotPrice(tokenPair));
+  const result = await getTokenPairSpotPrice(tokenPair);
+  console.log(result);
+
+  assertEq('WETH', result['0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'].symbol);
+
+  assertEq(18, result['0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'].decimals);
+
+  assertEq('rUSD', result['0xF9A2D7E60a3297E513317AD1d7Ce101CC4C6C8F6'].symbol);
+
+  assertEq(18, result['0xF9A2D7E60a3297E513317AD1d7Ce101CC4C6C8F6'].decimals);
+
+  // test relationship
+  assertEq(
+    1,
+    result['0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'].price *
+      result['0xF9A2D7E60a3297E513317AD1d7Ce101CC4C6C8F6'].price,
+  );
 }
 
 if (require.main === module) main();
