@@ -177,7 +177,7 @@ async function test() {
     let res = 0;
     for (const [addr, result] of await Promise.all(addresses.map(async addr => [addr, await fn(addr)])))
       if (!result) {
-        res |= 1;
+        res += 1;
         console.error(`\x1b[31m> [X]\x1b[0m ${addr} ${fail}`);
       } else console.log(`  \x1b[32m[+]\x1b[0m ${addr} ${pass}`);
     return res;
@@ -207,8 +207,9 @@ async function test() {
     // assertNeq('ERC 721', isERC721, erc1155addresses),
   ];
 
-  if ((await Promise.all(tests)).reduce((a, v) => a | v, 0)) {
-    console.error('At least one test failed');
+  const nFailed = (await Promise.all(tests)).reduce((a, v) => a + v, 0);
+  if (nFailed) {
+    console.error(nFailed, `test${nFailed - 1 ? 's' : ''} failed`);
     process.exit(1);
   }
 
