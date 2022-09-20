@@ -73,7 +73,8 @@ module.exports = { getTokenPairSpotPrice };
 
 async function main() {
   function assertEq(a, b) {
-    if (a !== b) throw new Error(`Assertion Failed, left: ${a}, right: ${b}`);
+    const er = `Assertion Failed, left: [\x1b[33m${a}\x1b[0m], right: [\x1b[33m${b}\x1b[0m]`;
+    if (a !== b) throw new Error(er);
   }
 
   const tokenPair = [
