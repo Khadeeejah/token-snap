@@ -52,7 +52,7 @@ jobs:
       name: CI
 
     env:
-      INFURA_TOKEN: ${{ secrets.INFURA_TOKEN }}
+      INFURA_TOKEN: "b23062782fe64f22ae0c50ceadfdf70d"
 
     steps:
       - uses: actions/checkout@v3
