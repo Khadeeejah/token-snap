@@ -209,7 +209,7 @@ async function test() {
 
   const nFailed = (await Promise.all(tests)).reduce((a, v) => a + v, 0);
   if (nFailed) {
-    console.error(`\x1b[33m${nFailed}\x1b[0m test${nFailed - 1 ? 's' : ''} failed`);
+    console.error(nFailed, `test${nFailed - 1 ? 's' : ''} failed`);
     process.exit(1);
   }
 
