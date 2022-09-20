@@ -48,6 +48,12 @@ jobs:
       matrix:
         node-version: [16.x, 18.x]
 
+    environment:
+      name: CI
+
+    env:
+      INFURA_TOKEN: ${{ secrets.INFURA_TOKEN }}
+
     steps:
       - uses: actions/checkout@v3
 
@@ -71,8 +77,6 @@ jobs:
           key: yarn-cache-${{ runner.os }}-${{ steps.yarn-version.outputs.YARN_VERSION }}-${{ hashFiles('yarn.lock') }}
 
       - run: yarn --frozen-lockfile
-
-      - run: echo "INFURA_TOKEN=${{ secrets.INFURA_TOKEN }}" > .env
 
       - run: node src/token.js
 
