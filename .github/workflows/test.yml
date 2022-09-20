@@ -5,7 +5,8 @@ on:
   pull_request:
 
 jobs:
-  Build:
+  build-lint:
+    name: "Build & Lint"
     runs-on: ubuntu-latest
 
     strategy:
@@ -37,14 +38,6 @@ jobs:
       - run: yarn --frozen-lockfile
 
       - run: yarn build
-
-  Lint:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - run: yarn --frozen-lockfile
 
       - run: yarn lint
 
