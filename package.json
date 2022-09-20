@@ -1,6 +1,6 @@
 {
   "name": "@khadeeejah/tokensnap",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Get Spot Prices for a Token Pair",
   "repository": {
     "type": "git",
