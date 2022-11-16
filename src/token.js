@@ -1,7 +1,7 @@
 const provider = require('./provider');
 const { ERC721, ERC1155, ERC20 } = require('./interfaces')(provider);
 
-// ERC165: https://github.com/ethereum/EIPs/blob/e82a4aaf8e12fb68b7cdf3f8e56fb4434f327cba/EIPS/eip-165.md
+// EIP 165: https://github.com/ethereum/EIPs/blob/e82a4aaf8e12fb68b7cdf3f8e56fb4434f327cba/EIPS/eip-165.md
 function computeInterfaceId(contract, methods) {
   const interfaces = contract.options.jsonInterface.filter(
     entry => entry.type === 'function' && methods.includes(entry.name),
