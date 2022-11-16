@@ -1,9 +1,9 @@
+
 # Token Snap
 
 Snaps to enable users fetch token price from uniswap and also check if a token is either ERC20,ERC721 and ERC1155 token
 
-<img width="1512" alt="Screen Shot 2022-09-08 at 8 10 00 PM" src="https://user-images.githubusercontent.com/52764879/189172705-97655761-f9ad-4023-b4db-c4f33c47ac31.png">
-
+<img width="1504" alt="Screenshot 2022-11-17 at 12 13 05 AM" src="https://user-images.githubusercontent.com/52764879/202285105-98ab6126-02fe-45f5-9174-960fbf934c10.png">
 ## Live Demo
 
 You can test the daap here [Demo](https://khadeeejah.github.io/token-snap)
