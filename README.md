@@ -1,4 +1,3 @@
-
 # Token Snap
 
 Snaps to enable users fetch token price from uniswap and also check if a token is either ERC20,ERC721 and ERC1155 token
