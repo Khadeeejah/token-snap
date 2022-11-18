@@ -22,10 +22,10 @@ async function connect() {
   });
 }
 
-async function snapRPC(method, args) {
+async function snapRPC(method, params) {
   const response = await ethereum.request({
     method: 'wallet_invokeSnap',
-    params: [snapId, { method, args }],
+    params: [snapId, { method, params }],
   });
 
   if ('error' in response) {

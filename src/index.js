@@ -29,9 +29,9 @@ module.exports.onRpcRequest = async ({ request }) => {
   try {
     switch (request.method) {
       case 'price_lookup':
-        return { result: await lookupHandler(request.args) };
+        return { result: await lookupHandler(request.params) };
       case 'identify_token':
-        return { result: await identifyHandler(request.args) };
+        return { result: await identifyHandler(request.params) };
       default:
     }
   } catch (err) {
